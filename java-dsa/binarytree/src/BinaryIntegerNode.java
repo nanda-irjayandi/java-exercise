@@ -18,4 +18,8 @@ public class BinaryIntegerNode {
         right = null;
     }
 
+    @Override
+    public String toString() {
+        return Integer.toString(this.value);
+    }
 }
