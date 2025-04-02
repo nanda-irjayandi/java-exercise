@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class BinaryIntegerTree {
 
     public static void main(String[] args) {
@@ -48,7 +50,37 @@ public class BinaryIntegerTree {
         return getHeight(node.left) - getHeight(node.right);
     }
 
-    public void traverseInOrder(BinaryIntegerNode node){
+    public BinaryIntegerNode rotateLeft(BinaryIntegerNode rootNode){
+        if (rootNode == null || rootNode.right == null) return rootNode;
+
+        BinaryIntegerNode pivotNode = rootNode.right; // in this way the memory address is saved before being removed by the JVM garbage collector
+        rootNode.right = pivotNode.left; // it does not matter if the pivotNode left children is null or not
+        pivotNode.left = rootNode; // as the left node of the pivot is saved, we can now assign the root node into the left child of the pivot
+
+        return pivotNode;
+    }
+
+    public BinaryIntegerNode rotateRight(BinaryIntegerNode rootNode){
+        if (rootNode == null || rootNode.left == null) return rootNode;
+
+        BinaryIntegerNode pivotNode = rootNode.left;
+        rootNode.left = pivotNode.right;
+        pivotNode.right = rootNode;
+
+        return pivotNode;
+    }
+    public ArrayList<BinaryIntegerNode> traverseTree(BinaryIntegerTree tree, Traversal traversal){
+        ArrayList<BinaryIntegerNode> collector = new ArrayList<>();
+        switch (traversal){
+            case PREORDER -> traversePreOrder(tree.root, collector);
+            case INORDER -> traverseInOrder(tree.root, collector);
+            case POSTORDER -> traversePostOrder(tree.root, collector);
+            default -> throw new IllegalStateException("Unexpected value: " + traversal);
+        }
+        return collector;
+    }
+
+    public void traverseInOrder(BinaryIntegerNode node, ArrayList<BinaryIntegerNode> arrayList){
         if (node != null){
             traverseInOrder(node.left);
             System.out.print(" " + node.value);
