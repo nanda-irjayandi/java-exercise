@@ -4,15 +4,26 @@ public class BinaryIntegerTree {
 
     public static void main(String[] args) {
         BinaryIntegerTree bt = new BinaryIntegerTree();
-        int[] integer = {50, 49, 48, 47, 46};
+        int[] integer = {50, 49, 48, 47, 46, 51, 55, 54, 53};
 
         for (int integ : integer) {
+            ArrayList<BinaryIntegerNode> arrayList = new ArrayList<>();
             bt.add(integ);
-            bt.traversePreOrder(bt.root);
+//            bt.traversePreOrder(bt.root, arrayList);
+            arrayList.addAll(bt.traverseTree(bt, Traversal.PREORDER));
+            System.out.println(arrayList);
             System.out.println(" ");
+            System.out.println("Height: " + bt.getHeight(bt.root));
+            System.out.println("Balance: " + bt.getBalance(bt.root));
         }
 
-        System.out.println(bt.getHeight(bt.root));
+        bt.root = bt.rotateLeft(bt.root);
+        ArrayList<BinaryIntegerNode> arrayList = bt.traverseTree(bt, Traversal.PREORDER);
+        System.out.println(arrayList);
+
+        bt.root = bt.rotateRight(bt.root);
+        arrayList = bt.traverseTree(bt, Traversal.PREORDER);
+        System.out.println(arrayList);
     }
     BinaryIntegerNode root;
 
@@ -82,17 +93,28 @@ public class BinaryIntegerTree {
 
     public void traverseInOrder(BinaryIntegerNode node, ArrayList<BinaryIntegerNode> arrayList){
         if (node != null){
-            traverseInOrder(node.left);
-            System.out.print(" " + node.value);
-            traverseInOrder(node.right);
+            traverseInOrder(node.left, arrayList);
+//            System.out.print(" " + node.value);
+            arrayList.add(node);
+            traverseInOrder(node.right, arrayList);
         }
     }
 
-    public void traversePreOrder(BinaryIntegerNode node){
+    public void traversePreOrder(BinaryIntegerNode node, ArrayList<BinaryIntegerNode> arrayList){
         if (node != null){
-            System.out.print(" " + node.value);
-            traversePreOrder(node.left);
-            traversePreOrder(node.right);
+//            System.out.print(" " + node.value);
+            arrayList.add(node);
+            traversePreOrder(node.left, arrayList);
+            traversePreOrder(node.right, arrayList);
+        }
+    }
+
+    public void traversePostOrder(BinaryIntegerNode node, ArrayList<BinaryIntegerNode> arrayList){
+        if (node != null){
+//            System.out.print(" " + node.value);
+            traversePreOrder(node.left, arrayList);
+            traversePreOrder(node.right, arrayList);
+            arrayList.add(node);
         }
     }
 }
