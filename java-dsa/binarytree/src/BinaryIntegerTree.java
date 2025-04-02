@@ -36,8 +36,8 @@ public class BinaryIntegerTree {
 
     public void traverseInOrder(BinaryIntegerNode node){
         if (node != null){
-            System.out.println(" " + node.value);
             traverseInOrder(node.left);
+            System.out.println(" " + node.value);
             traverseInOrder(node.right);
         }
     }
