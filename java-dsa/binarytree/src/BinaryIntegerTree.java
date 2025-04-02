@@ -42,6 +42,12 @@ public class BinaryIntegerTree {
         return 1 + Math.max(leftHeight, rightHeight);
     }
 
+    public int getBalance(BinaryIntegerNode node){
+        if (node == null) return 0; // we assume the balance is neutral if the node is null
+
+        return getHeight(node.left) - getHeight(node.right);
+    }
+
     public void traverseInOrder(BinaryIntegerNode node){
         if (node != null){
             traverseInOrder(node.left);
