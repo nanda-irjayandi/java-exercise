@@ -2,14 +2,15 @@ public class BinaryIntegerTree {
 
     public static void main(String[] args) {
         BinaryIntegerTree bt = new BinaryIntegerTree();
-        bt.add(50);
-        bt.traverseInOrder(bt.root);
-        bt.add(7);
-        bt.traverseInOrder(bt.root);
-        bt.add(11);
-        bt.traverseInOrder(bt.root);
-        bt.add(3);
-        bt.traverseInOrder(bt.root);
+        int[] integer = {50, 49, 48, 47, 46};
+
+        for (int integ : integer) {
+            bt.add(integ);
+            bt.traversePreOrder(bt.root);
+            System.out.println(" ");
+        }
+
+        System.out.println(bt.getHeight(bt.root));
     }
     BinaryIntegerNode root;
 
@@ -29,6 +30,16 @@ public class BinaryIntegerTree {
         }
 
         return current;
+    }
+
+    public int getHeight(BinaryIntegerNode node){
+//        if (node == null) return 0; // this result in start index of 1 rather than 0
+        if (node == null) return -1; // if the tree is empty we can consider the tree to have invalid height, and also a tree with a leaf will start at 0
+
+        int leftHeight = getHeight(node.left);
+        int rightHeight = getHeight(node.right);
+
+        return 1 + Math.max(leftHeight, rightHeight);
     }
 
     public void traverseInOrder(BinaryIntegerNode node){
