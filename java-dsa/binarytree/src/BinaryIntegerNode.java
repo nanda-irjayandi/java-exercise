@@ -2,6 +2,7 @@ public class BinaryIntegerNode {
     public static void main(String[] args) {
         BinaryIntegerNode test1 = new BinaryIntegerNode(4);
         System.out.println(test1);
+
     }
     int value;
     BinaryIntegerNode left;
@@ -16,6 +17,5 @@ public class BinaryIntegerNode {
         left = null;
         right = null;
     }
-
 
 }
