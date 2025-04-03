@@ -71,16 +71,30 @@ public class Node {
     }
 
     public static Node addNode(Node node, int value){
+        // unlike the later part of the height marker, this way you are marking the distance from the surface level
+        // note: this is a figurative concept, to better demonstrate it see the other method
+        // node.height = 1 + Math.max(getHeight(node.left), getHeight(node.right));
+
         if (node == null) return new Node(value);
 
-        if (value < node.value) node.left =     addNode(node.left, value);
-        if (value > node.value) node.right =    addNode(node.right, value);
+        else {
+            if (value < node.value) node.left =     addNode(node.left, value);
+            if (value > node.value) node.right =    addNode(node.right, value);
 
-        // this is unnecessary as above statement should have covered this case
-        // but I do want it explicitly for my own education purpose
-        else if (value == node.value) {
-            return node;
+            // this is unnecessary as above statement should have covered this case
+            // but I do want it explicitly for my own education purpose
+            if (value == node.value) return node;
         }
+
+        // this update would only be called when the recursion above have encountered null leaf node
+        // this is like getting onto the deepest part of the well, and you attach height markers relative to the deepest well as you climb back up
+        node.height = 1 + Math.max(getHeight(node.left), getHeight(node.right));
+
+        int balance = getBalance(node);
+
+        if (balance < -1) System.out.println("Found left imbalance at: " + node);
+        if (balance > 1) System.out.println("Found right imbalance at: " + node);
+
         return node;
     }
 
