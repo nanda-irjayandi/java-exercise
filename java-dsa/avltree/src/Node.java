@@ -72,6 +72,38 @@ public class Node {
         return pivotNode;
     }
 
+    public static Node rotateBalance(Node node, int balanceFactor){
+        // when balance factor is negative means that right rotation must be called
+        if (balanceFactor < -1) {
+            System.out.println("Found left imbalance at " + node);
+
+            if (getBalance(node.left) > 0)
+            {
+                System.out.println("Found left right imbalance at " + node);
+                System.out.println("Starting left rotation at left child " + node.left);
+
+                node.left = node.left.rotateLeft(); // a preemptive check which would predict if single rotation would lead to imbalanced result
+            }
+
+            System.out.println("Starting right rotation at " + node);
+            return node.rotateRight();
+
+        } else if (balanceFactor > 1) {
+            System.out.println("Found right imbalance at " + node);
+
+            if (getBalance(node.right) < 0) {
+                System.out.println("Found right left imbalance at " + node);
+                System.out.println("Starting right rotation at right child " + node.right);
+
+                node.right = node.right.rotateRight();
+            }
+
+            System.out.println("Starting left rotation at " + node);
+            return node.rotateLeft();
+        }
+
+        return node;
+    }
     public static Node addNode(Node node, int value){
         // unlike the later part of the height marker, this way you are marking the distance from the surface level
         // note: this is a figurative concept, to better demonstrate it see the other method
