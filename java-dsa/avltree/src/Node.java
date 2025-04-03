@@ -31,6 +31,45 @@ public class Node {
         return getHeight(node.right) - getHeight(node.left);
     }
 
+    public Node rotateLeft(){
+        // there are two important nodes: pivotNode which will become the new parent, and the rootNode which will become one of the child of the pivotNode
+        // for left rotation, the pivotNode is the right child of the rootNode, and the rootNode will become the left child of the pivotNode
+
+        Node rootNode = this;
+
+        Node pivotNode = rootNode.right;
+
+        // we will be doing a strict pointer manipulation to do rotation
+
+        // Step 1: Move the left subtree of pivotNode to rootNode’s right child.
+        // Since pivotNode will become the new root, its left subtree needs to be assigned to the right of rootNode so we do not lose reference to it.
+        rootNode.right = pivotNode.left;
+
+        // Step 2: reassign the rootNode as the left child of the pivotNode
+        pivotNode.left = rootNode;
+
+        // Step 3: calculate the new height of the key nodes
+        rootNode.height = 1 + Math.max(getHeight(rootNode.left), getHeight(rootNode.right));
+        pivotNode.height = 1 + Math.max(getHeight(pivotNode.left), getHeight(pivotNode.right));
+
+        // Step 4: return the pivotNode that now substitute the position of the rootNode
+        return pivotNode;
+    }
+
+    public Node rotateRight(){
+        // pointer manipulation
+        Node pivotNode = this.left;
+        this.left = pivotNode.right;
+        pivotNode.right = this;
+
+        // recalculate the height
+        this.height = 1 + Math.max(getHeight(this.left), getHeight(this.right));
+        pivotNode.height = 1 + Math.max(getHeight(pivotNode.left), getHeight(pivotNode.right));
+
+        // return the pivotNode with rootNode as the right child
+        return pivotNode;
+    }
+
     public static Node addNode(Node node, int value){
         if (node == null) return new Node(value);
 
