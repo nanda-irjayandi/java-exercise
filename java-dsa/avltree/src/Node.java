@@ -29,6 +29,20 @@ public class Node {
         return getHeight(node.left) - getHeight(node.right);
     }
 
+    public Node addNode(Node node, int value){
+        if (node == null) return new Node(value);
+
+        if (value < node.value) node.left =     addNode(node.left, value);
+        if (value > node.value) node.right =    addNode(node.right, value);
+
+        // this is unnecessary as above statement should have covered this case
+        // but I do want it explicitly for my own education purpose
+        else if (value == node.value) {
+            return node;
+        }
+        return node;
+    }
+
     @Override
     public String toString() {
         return Integer.toString(value);
