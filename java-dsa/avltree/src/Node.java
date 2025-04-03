@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Node {
     int value;
     Node left, right;
@@ -41,6 +43,20 @@ public class Node {
             return node;
         }
         return node;
+    }
+
+    public static ArrayList<Node> traversePre(Node node, ArrayList<Node> arrayList){
+        // preorder will add node for each movement from the root to a left leaf
+        if (node == null) return arrayList;
+
+        // I know this is redundant I just need a more explicit expression
+        if (node != null) {
+            arrayList.add(node); // for each node visited add the node to the arrayList
+            traversePre(node.left, arrayList);
+            traversePre(node.right, arrayList);
+        }
+
+        return arrayList; // return modified arrayList
     }
 
     @Override
