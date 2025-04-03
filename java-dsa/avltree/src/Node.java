@@ -34,6 +34,7 @@ public class Node {
     public Node rotateLeft(){
         // there are two important nodes: pivotNode which will become the new parent, and the rootNode which will become one of the child of the pivotNode
         // for left rotation, the pivotNode is the right child of the rootNode, and the rootNode will become the left child of the pivotNode
+        if (this.right == null) return this;
 
         Node rootNode = this;
 
@@ -57,6 +58,7 @@ public class Node {
     }
 
     public Node rotateRight(){
+        if (this.left == null) return this;
         // pointer manipulation
         Node pivotNode = this.left;
         this.left = pivotNode.right;
